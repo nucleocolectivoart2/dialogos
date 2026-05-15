@@ -1,0 +1,41 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-forest",
+      "description": "Dosel de bosque profundo mirando hacia el cielo",
+      "imageUrl": "https://picsum.photos/seed/forest-canopy/1920/1080",
+      "imageHint": "forest canopy"
+    },
+    {
+      "id": "soil-roots",
+      "description": "Detalle de raíces y suelo fértil",
+      "imageUrl": "https://picsum.photos/seed/root1/400/600",
+      "imageHint": "soil roots"
+    },
+    {
+      "id": "farmer-hands",
+      "description": "Manos de agricultor trabajando la tierra",
+      "imageUrl": "https://picsum.photos/seed/root2/400/400",
+      "imageHint": "farmer hands"
+    },
+    {
+      "id": "local-seeds",
+      "description": "Semillas locales y biodiversidad",
+      "imageUrl": "https://picsum.photos/seed/root3/400/400",
+      "imageHint": "local seeds"
+    },
+    {
+      "id": "native-forest",
+      "description": "Bosque nativo colombiano",
+      "imageUrl": "https://picsum.photos/seed/root4/400/600",
+      "imageHint": "native forest"
+    },
+    {
+      "id": "integricult-about",
+      "description": "Agricultura regenerativa en acción",
+      "imageUrl": "https://picsum.photos/seed/integricult-about/800/1000",
+      "imageHint": "regenerative agriculture"
+    }
+  ]
+}

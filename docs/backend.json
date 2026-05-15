@@ -1,0 +1,130 @@
+
+{
+  "entities": {
+    "Podcast": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Podcast",
+      "type": "object",
+      "description": "Represents a podcast series from which episodes are sourced and managed within the Núcleo Vivo platform.",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "rssFeedUrl": { "type": "string", "format": "uri" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string", "format": "uri" },
+        "author": { "type": "string" },
+        "language": { "type": "string" },
+        "lastFetchedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "rssFeedUrl", "description", "imageUrl", "author", "lastFetchedAt"]
+    },
+    "Episode": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Episode",
+      "type": "object",
+      "description": "Represents a single episode of a podcast, including its core content, metadata, and AI-generated insights.",
+      "properties": {
+        "id": { "type": "string" },
+        "podcastId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "audioUrl": { "type": "string", "format": "uri" },
+        "publishedAt": { "type": "string", "format": "date-time" },
+        "durationSeconds": { "type": "number" },
+        "externalUrl": { "type": "string", "format": "uri" },
+        "imageUrl": { "type": "string", "format": "uri" },
+        "summary": { "type": "string" },
+        "keyTensions": { "type": "array", "items": { "type": "string" } },
+        "sustainableIdeas": { "type": "array", "items": { "type": "string" } },
+        "guestIds": { "type": "array", "items": { "type": "string" } },
+        "themeIds": { "type": "array", "items": { "type": "string" } },
+        "territoryIds": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["id", "podcastId", "title", "description", "audioUrl", "publishedAt", "durationSeconds", "externalUrl", "summary", "keyTensions", "sustainableIdeas", "guestIds", "themeIds", "territoryIds"]
+    },
+    "ChatMessage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ChatMessage",
+      "type": "object",
+      "description": "A message in the AI chat or radio chat.",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "text": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "assistant"] },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "sessionId": { "type": "string" }
+      },
+      "required": ["userId", "text", "timestamp", "role"]
+    },
+    "ChatNode": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ChatNode",
+      "type": "object",
+      "description": "A node emergently created from a chat conversation.",
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "description": { "type": "string" },
+        "cluster": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "source": { "type": "string" }
+      },
+      "required": ["label", "description", "createdAt"]
+    },
+    "ContentItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ContentItem",
+      "type": "object",
+      "description": "Represents a news item, blog post, or update within the ecosystem.",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "content": { "type": "string" },
+        "slug": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "imageUrl": { "type": "string", "format": "uri" },
+        "author": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["title", "excerpt", "slug", "date"]
+    }
+  },
+  "auth": {
+    "providers": ["password", "anonymous"]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/podcasts/{podcastId}",
+        "definition": { "entityName": "Podcast", "schema": { "$ref": "#/backend/entities/Podcast" } }
+      },
+      {
+        "path": "/episodes/{episodeId}",
+        "definition": { "entityName": "Episode", "schema": { "$ref": "#/backend/entities/Episode" } }
+      },
+      {
+        "path": "/radio_chat/{messageId}",
+        "definition": { "entityName": "ChatMessage", "schema": { "$ref": "#/backend/entities/ChatMessage" } }
+      },
+      {
+        "path": "/nodo_messages/{messageId}",
+        "definition": { "entityName": "ChatMessage", "schema": { "$ref": "#/backend/entities/ChatMessage" } }
+      },
+      {
+        "path": "/chat_nodes/{nodeId}",
+        "definition": { "entityName": "ChatNode", "schema": { "$ref": "#/backend/entities/ChatNode" } }
+      },
+      {
+        "path": "/chat_connections/{connId}",
+        "definition": { "entityName": "ChatConnection", "schema": { "type": "object" } }
+      },
+      {
+        "path": "/contentItems/{itemId}",
+        "definition": { "entityName": "ContentItem", "schema": { "$ref": "#/backend/entities/ContentItem" } }
+      }
+    ]
+  }
+}
