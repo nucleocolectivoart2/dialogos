@@ -1,0 +1,38 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() { return isSignedIn() && exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid)); }
+
+    match /podcasts/{id} { allow read: if true; allow write: if isAdmin(); }
+    match /episodes/{id} { allow read: if true; allow write: if isAdmin(); }
+    match /themes/{id} { allow read: if true; allow write: if isAdmin(); }
+    match /territories/{id} { allow read: if true; allow write: if isAdmin(); }
+    match /radio_programs/{id} { allow read: if true; allow write: if isAdmin(); }
+    match /contentItems/{id} { allow read: if true; allow write: if isAdmin(); }
+    match /roles_admin/{id} { allow get: if isSignedIn(); allow list, write: if isAdmin(); }
+    
+    match /radio_chat/{id} {
+      allow read: if true;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAdmin();
+    }
+
+    match /nodo_messages/{id} {
+      allow read: if true;
+      allow create: if isSignedIn();
+      allow update, delete: if isAdmin();
+    }
+
+    match /chat_nodes/{id} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /chat_connections/{id} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+  }
+}
